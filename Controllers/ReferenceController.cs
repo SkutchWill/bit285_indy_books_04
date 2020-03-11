@@ -3,43 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IndyBooks.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IndyBooks.Controllers
 {
-
     [Route("api/[controller]")]
-    public class WriterController : Controller
+    public class ReferenceController : Controller
     {
-        //inject the db 
-        private IndyBooksDataContext _db;
-        public WriterController(IndyBooksDataContext db) { _db = db; }
-
         // GET: api/<controller>
         [HttpGet]
-        public IActionResult Get()
+        public IEnumerable<string> Get()
         {
-            var writer = _db.Writers.ToList<Writer>();
-            //_db.Add<Writer>(writer);
-
-            return RedirectToAction("Post", writer);
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public string Get(int id)
         {
-            var writer = _db.Writers.Select(w => new { id = w.Id, name = w.Name });
-            return RedirectToAction("Post", writer);
+            return "value";
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post([FromBody]Writer writer)
+        public void Post([FromBody]string value)
         {
-            return Content(writer.Name);
         }
 
         // PUT api/<controller>/5
